@@ -1,0 +1,22 @@
+version: "1.0"
+
+services:
+  myHome:
+    build: ./
+    command: ./myHome
+    ports:
+      - 8000:8000
+    depends_on:
+      - db
+    environment:
+      POSTGRES_PASSWORD: 1234
+
+  db:
+    restart: always
+    image: postgres:15.0
+    volumes:
+      - ./.database/postgres/data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: 1234
+    ports:
+      - 5436:5432
