@@ -10,18 +10,13 @@ type HomeSizeAndRooms struct {
 }
 
 func InitializeRooms() []HomeSizeAndRooms {
-	kitchenRoom := HomeSizeAndRooms{
-		Height:   2.8,
-		Long:     3.2,
-		Width:    4.3,
-		RoomName: "Кухня",
+	return []HomeSizeAndRooms{
+		{2.8, 3.2, 4.3, "Кухня"},
+		{2.8, 5.8, 4.2, "Гостинная"},
+		{2.8, 3.4, 5.4, "Спальня_№1 (основная)"},
+		{2.8, 3.8, 3.5, "Спальня_№2 (гостевая)"},
+		{2.8, 4.8, 2, "Санузел"},
 	}
-	livingRoom := HomeSizeAndRooms{2.8, 5.8, 4.2, "Гостинная"}
-	bedRoom := HomeSizeAndRooms{2.8, 3.4, 5.4, "Спальня_№1 (основная)"}
-	guestRoom := HomeSizeAndRooms{2.8, 3.8, 3.5, "Спальня_№2 (гостевая)"}
-	bathRoom := HomeSizeAndRooms{2.8, 4.8, 2, "Санузел"}
-
-	return []HomeSizeAndRooms{kitchenRoom, livingRoom, bedRoom, guestRoom, bathRoom}
 }
 
 func (obj HomeSizeAndRooms) RoomArea() float64 {

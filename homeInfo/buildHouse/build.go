@@ -30,3 +30,5 @@ func BuildProject() {
 	homeSizeAndRooms.AreaHouse(rooms...)
 	homePeople.PrintPeople(people)
 }
+
+//проверка..
