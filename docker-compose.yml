@@ -1,22 +1,32 @@
-version: "1.0"
+version: '3.3'
 
 services:
-  myHome:
+  myhome:
     build: ./
-    command: ./myHome
+    command: ./my_home
     ports:
       - 8000:8000
     depends_on:
       - db
     environment:
-      POSTGRES_PASSWORD: 1234
+      - DB_NAME=test
+      - DB_USER=user
+      - DB_PASSWORD=1234
 
   db:
     restart: always
-    image: postgres:15.0
+    image: postgres:16-alpine
     volumes:
       - ./.database/postgres/data:/var/lib/postgresql/data
     environment:
+      POSTGRES_DB: "testdb"
+      POSTGRES_USER: "my_home"
       POSTGRES_PASSWORD: 1234
     ports:
       - 5436:5432
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
