@@ -1,10 +1,10 @@
 package buildHouse
 
 import (
-	"myHome/homeInfo/homeAppliances"
-	"myHome/homeInfo/homeFurniture"
-	"myHome/homeInfo/homePeople"
-	"myHome/homeInfo/homeSizeAndRooms"
+	"my_home/homeInfo/homeAppliances"
+	"my_home/homeInfo/homeFurniture"
+	"my_home/homeInfo/homePeople"
+	"my_home/homeInfo/homeSizeAndRooms"
 )
 
 func BuildProject() {

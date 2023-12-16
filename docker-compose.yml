@@ -1,11 +1,11 @@
 version: '3.3'
 
 services:
-  myhome:
+  my_home:
     build: ./
-    command: ./my_home
+    command: ./my_home/main
     ports:
-      - 8000:8000
+      - "8000:8000"
     depends_on:
       - db
     environment:
@@ -14,6 +14,7 @@ services:
       - DB_PASSWORD=1234
 
   db:
+    container_name: my_home-db
     restart: always
     image: postgres:16-alpine
     volumes:
@@ -21,12 +22,13 @@ services:
     environment:
       POSTGRES_DB: "testdb"
       POSTGRES_USER: "my_home"
-      POSTGRES_PASSWORD: 1234
+      POSTGRES_PASSWORD: "1234"
     ports:
-      - 5436:5432
+      - "5436:5432"
 
   adminer:
     image: adminer
     restart: always
     ports:
-      - 8080:8080
+      - "8080:8080"
+
