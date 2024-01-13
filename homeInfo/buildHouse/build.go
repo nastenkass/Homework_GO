@@ -1,17 +1,25 @@
 package buildHouse
 
 import (
+	"fmt"
+	"github.com/jackc/pgx/v5/pgxpool"
 	"my_home/homeInfo/homeAppliances"
 	"my_home/homeInfo/homeFurniture"
 	"my_home/homeInfo/homePeople"
 	"my_home/homeInfo/homeSizeAndRooms"
+	"os"
 )
 
-func BuildProject() {
+func BuildProject(connPool *pgxpool.Pool) error {
 	rooms := homeSizeAndRooms.InitializeRooms()
 	furniture := homeFurniture.InitializeFurniture()
 	appliance := homeAppliances.InitializeAppliances()
-	people := homePeople.InitializePeople()
+
+	people, err := homePeople.InitializePeopleFromDatabase(connPool)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Ошибка получения данных о людях из базы данных: %v\n", err)
+		os.Exit(1)
+	}
 
 	roomNames := []string{
 		"Спальня_№1 (основная)",
@@ -29,6 +37,6 @@ func BuildProject() {
 
 	homeSizeAndRooms.AreaHouse(rooms...)
 	homePeople.PrintPeople(people)
-}
 
-//проверка..
+	return nil
+}

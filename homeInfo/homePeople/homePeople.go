@@ -1,6 +1,10 @@
 package homePeople
 
-import "fmt"
+import (
+	"context"
+	"fmt"
+	"github.com/jackc/pgx/v5/pgxpool"
+)
 
 type HomePeople struct {
 	Name       string
@@ -10,14 +14,25 @@ type HomePeople struct {
 	LiveRoom   string
 }
 
-func InitializePeople() []HomePeople {
-	return []HomePeople{
-		{"Настя", "Савина", 20, "Вязальщица", "Спальня_№1 (основная)"},
-		{"Анастасия", "Цой", 21, "Создатель таблеток", "Спальня_№1 (основная)"},
-		{"Леонардо", "Дикаприо", 48, "Менеджер", "Спальня_№2 (гостевая)"},
-		{"Железный", "Человек", 31, "Супергерой", "Гостинная"},
-		{"Акакий", "Акакиевич", 35, "Маленький человек", "Кухня"},
+func InitializePeopleFromDatabase(connPool *pgxpool.Pool) ([]HomePeople, error) {
+	query := "SELECT name, lastname, age, profession, liveroom FROM homePeople"
+	rows, err := connPool.Query(context.Background(), query)
+	if err != nil {
+		return nil, err
 	}
+	defer rows.Close()
+
+	var people []HomePeople
+	for rows.Next() {
+		var person HomePeople
+		err := rows.Scan(&person.Name, &person.Lastname, &person.Age, &person.Profession, &person.LiveRoom)
+		if err != nil {
+			return nil, err
+		}
+		people = append(people, person)
+	}
+
+	return people, nil
 }
 
 func PrintPeople(people []HomePeople) {
